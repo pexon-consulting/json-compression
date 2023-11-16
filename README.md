@@ -1,4 +1,4 @@
-# LTS JSON
+# JSON compression
 
-longterm storage format for json.
-Heavily compressed to reduced compression scheme specifically to reduce json file size.
+Implementation of lossless compression scheme designed specifically for json.
+Intended to be used in conjunction with long-term storage solutions for efficient usage of resources.
