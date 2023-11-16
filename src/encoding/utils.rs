@@ -1,37 +1,18 @@
-use serde_json::Value;
+/*
+ * utility functions for encoding
+ */
+
 use std::io;
 
-use crate::sorted_collection::SortedCollection;
+use serde_json::Value;
 
-pub fn common_prefix_len(s1: &[u8], s2: &[u8]) -> usize {
-    s1.iter().zip(s2).take_while(|(a, b)| a == b).count()
-}
+use crate::sorted_collection::SortedCollection;
 
 /// Write a vbyte encoded number into a buffer
 pub fn write_number(value: u64, w: &mut impl io::Write) -> io::Result<()> {
     let data = vbyte::compress(value);
     w.write_all(&data)?;
     Ok(())
-}
-
-pub fn collect_string_values<'a>(v: &'a Value, b: &mut Vec<&'a [u8]>) {
-    match v {
-        Value::String(s) => {
-            b.push(s.as_bytes());
-        }
-        Value::Array(a) => {
-            for entry in a {
-                collect_string_values(entry, b);
-            }
-        }
-        Value::Object(o) => {
-            for (key, value) in o {
-                b.push(key.as_bytes());
-                collect_string_values(value, b)
-            }
-        }
-        _ => {}
-    }
 }
 
 pub fn write_compressed_strings(
@@ -66,4 +47,28 @@ pub fn write_compressed_strings(
     }
 
     Ok(())
+}
+
+pub fn common_prefix_len(s1: &[u8], s2: &[u8]) -> usize {
+    s1.iter().zip(s2).take_while(|(a, b)| a == b).count()
+}
+
+pub fn collect_string_values<'a>(v: &'a Value, b: &mut Vec<&'a [u8]>) {
+    match v {
+        Value::String(s) => {
+            b.push(s.as_bytes());
+        }
+        Value::Array(a) => {
+            for entry in a {
+                collect_string_values(entry, b);
+            }
+        }
+        Value::Object(o) => {
+            for (key, value) in o {
+                b.push(key.as_bytes());
+                collect_string_values(value, b)
+            }
+        }
+        _ => {}
+    }
 }

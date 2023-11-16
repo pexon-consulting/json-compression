@@ -1,10 +1,8 @@
+pub mod utils;
 use serde_json::{Map, Value};
-use std::{collections::HashSet, io, ops::Sub};
+use std::{io, ops::Sub};
 
-use crate::{
-    sorted_collection::SortedCollection,
-    utils::{self, write_number},
-};
+use crate::sorted_collection::SortedCollection;
 
 /// Utilities for encoding json.
 
@@ -48,14 +46,14 @@ fn write_inplace_number(
     } else {
         let code = code | mask;
         w.write_all(&[code])?;
-        write_number(value, w)
+        utils::write_number(value, w)
     }
 }
 
 fn write_int(value: i64, w: &mut impl io::Write) -> io::Result<()> {
     let sign = if value >= 0 { 0 } else { 1 } << 3;
     let code = INT | sign;
-    let mut value = if value >= 0 {
+    let value = if value >= 0 {
         value as u64
     } else {
         // value is at least -1.

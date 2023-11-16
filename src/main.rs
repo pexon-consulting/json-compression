@@ -1,9 +1,6 @@
 pub mod sorted_collection;
-use std::io;
-pub(crate) mod utils;
-use encoding::write_json;
 use sorted_collection::SortedCollection;
-use utils::*;
+use std::io;
 
 mod encoding;
 
@@ -26,7 +23,7 @@ fn main() {
     // get all strings inside the json document
     let strings = {
         let mut v = Vec::new();
-        collect_string_values(&json, &mut v);
+        encoding::utils::collect_string_values(&json, &mut v);
         v
     };
 
@@ -48,8 +45,8 @@ fn compress_json(
     w.write_all(&[VERSION])?;
 
     // Write prefix-encoded strings
-    write_compressed_strings(string_container, w)?;
+    encoding::utils::write_compressed_strings(string_container, w)?;
 
     // now, write the actuall json structure.
-    write_json(value, string_container, w)
+    encoding::write_json(value, string_container, w)
 }
