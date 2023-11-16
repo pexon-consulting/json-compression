@@ -115,7 +115,7 @@ fn write_object(
 ) -> io::Result<()> {
     // First, we write how many entries do follow.
     let length = value.len();
-    write_inplace_number(ARR, 6, length as u64, w)?;
+    write_inplace_number(OBJ, 6, length as u64, w)?;
 
     // then we write the down the keys and values one by one
 

@@ -24,7 +24,7 @@ pub fn write_compressed_strings(
     write_number(amount as u64, w)?;
 
     // return early, of no further work is to be done
-    if strings.len() == 0 {
+    if strings.is_empty() {
         return Ok(());
     }
 
