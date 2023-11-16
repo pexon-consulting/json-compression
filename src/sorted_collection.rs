@@ -4,13 +4,17 @@ use std::collections::BTreeSet;
 pub struct SortedCollection<T: Ord>(Vec<T>);
 
 impl<T: Ord> SortedCollection<T> {
-    pub fn new(mut v: impl IntoIterator<Item = T>) -> Self {
+    pub fn new(v: impl IntoIterator<Item = T>) -> Self {
         let v = v.into_iter().collect::<BTreeSet<_>>().into_iter().collect();
         SortedCollection(v)
     }
 
     pub fn len(&self) -> usize {
         self.0.len()
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.0.is_empty()
     }
 
     /// Find the index of the value inside the collection
