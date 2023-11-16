@@ -1,6 +1,7 @@
 pub mod sorted_collection;
 use sorted_collection::SortedCollection;
 use std::io;
+mod decoding;
 
 mod encoding;
 

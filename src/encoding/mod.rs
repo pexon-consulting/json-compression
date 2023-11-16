@@ -6,15 +6,15 @@ use crate::sorted_collection::SortedCollection;
 
 /// Utilities for encoding json.
 
-const NULL: u8 = 0;
-const FALSE: u8 = 0b01;
-const TRUE: u8 = 0b10;
-const INT: u8 = 0b00_01_00_00;
-const FLOAT: u8 = 0b00_10_00_00;
+pub const NULL: u8 = 0;
+pub const FALSE: u8 = 0b01;
+pub const TRUE: u8 = 0b10;
+pub const INT: u8 = 0b00_01_00_00;
+pub const FLOAT: u8 = 0b00_10_00_00;
 
-const STR: u8 = 0b01_00_00_00;
-const ARR: u8 = 0b10_00_00_00;
-const OBJ: u8 = 0b11_00_00_00;
+pub const STR: u8 = 0b01_00_00_00;
+pub const ARR: u8 = 0b10_00_00_00;
+pub const OBJ: u8 = 0b11_00_00_00;
 
 fn write_null(w: &mut impl io::Write) -> io::Result<()> {
     w.write_all(&[NULL])
