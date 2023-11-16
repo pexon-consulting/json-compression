@@ -1,4 +1,5 @@
 use io;
+pub mod sorted_collection;
 use std::{collections::BTreeSet, io};
 pub(crate) mod utils;
 use utils::*;
@@ -28,8 +29,8 @@ fn main() {
         v
     };
 
-    // sort them
-    let strings: BTreeSet<_> = strings.into_iter().collect();
+    // sort and deduplicate them
+    let strings: BTreeSet<_> = SortedCollection::new(strings);
 
     // now, writing the result
     let mut writer = std::fs::File::create(outputfile).expect("create outputfile");

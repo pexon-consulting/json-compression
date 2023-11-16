@@ -1,4 +1,4 @@
-use std::io;
+use std::{io, collections::HashSet};
 use crate::utils; 
 
 /// Utilities for encoding json.
@@ -42,4 +42,8 @@ fn write_float(w: &mut impl io::Write, value: f64) -> io::Result<()> {
     let data = value.to_le_bytes();
     w.write_all(&[code])?;
     w.write_all(&data)
+}
+
+fn write_string(value: &str, string_container: HashSet<&str>, w: &mut impl io::Write) -> io::Result<()> {
+    todo!()
 }
